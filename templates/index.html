@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MoFlix</title>
+        <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">    
+        <title>MongoDB  video streaming</title>
+    </head>
+    <body>
+        <div style="margin: 0 auto; width: 500px;">
+            <h1>Welcome to MoFlix</h1>
+        </div>  
+        <button onclick="window.location.href = '/publicVideo';">Public Videos</button>
+        <h3>Logged in as {{username}}</h3>
+
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <input type="submit" value="Upload" />
+        </form>
+
+        <!-- Error 3 -->
+        
+        {% if Error == 3 %}
+        <div style="background-color: #5a9a67; margin: 15px; border-radius: 5px; padding: 15px;">
+            <p style="color: red;margin: 0 auto">Please Select A File to upload</p>
+        </div>
+        {% endif %}
+
+
+        {% if videos %}
+        <div style="background-color: #5a9a67; margin: 15px; border-radius: 5px; padding: 15px;">
+            <b>Recent File:</b>
+            <ul>
+                {% for video in videos.split('+') %}
+                <li><a href="{{video}}">{{video}}</a></li>
+
+                <!-- on pressing link it should redirect to player -->
+                <video width="640" height="240" controls>
+                    <source src="{{video}}" type="video/mp4">
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+
+        <div>
+            
+
+            <h3>Video Library</h3>
+            <ul>
+                {% for video in videos.split('+') %}
+                <li><a href="{{video}}">{{video}}</a></li>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+        
+
+        <form action="/" method="get">
+            <p><input type=submit value="Updated Video Library">
+        </form>
+
+
+        
+        <form action="/logout" method="get">
+            <p><input type=submit value="Logout">
+        </form>
+
+
+
+
+        <footer style="background-color: #5a9a67; margin: 15px; border-radius: 5px; padding: 15px;">
+            <p style="color: white;margin: 0 auto">Copyright by MoFlix©️ 🔗 Made with 🥰 by Team 4</p>
+    </body>
+    
+</html> 

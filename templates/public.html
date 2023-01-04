@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Public Videos</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+    <style>
+
+        .videos-grid {
+            display: flex;
+            flex-wrap: wrap;
+            
+        }
+
+        .videos-grid-video {
+            flex: 50%;
+            padding: 20px;
+        }
+
+        .videos-grid-video video {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>MoFlix</h1>
+    <h1 align="center">Public Videos</h1>
+
+    <button onclick="window.location.href='/'">User Dashboard</button>
+
+    <!-- <div class="mainv"> -->
+        <!-- <ul> -->
+            {% for video in user_videos %}
+            <h2>{{video}}'s Videos</h2>
+            
+            <div class="videos-grid">
+                {% for file in user_videos[video] %}
+                <div class="videos-grid-video">
+                    
+                    <video width="640" height="320" controls preload="metadata">
+                        <source src="/stream/{{file}}#t=0.2" type="video/mp4">
+                    </video> 
+
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        <!-- </ul> -->
+    <!-- </div> -->
+</body>
+
+</html>
+

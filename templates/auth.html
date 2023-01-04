@@ -1,0 +1,64 @@
+<!-- create a login page and sign up page -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoFlix</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">    
+    <style>
+        form {
+            margin: 0 auto;
+            width: 200px;
+        }
+
+        input[type=submit] {
+            width: 100%;
+        }
+       
+    </style>
+</head>
+
+<body>
+
+    {% if Error == 1 %}
+    <div style="background-color: #5a9a67; margin: 15px; border-radius: 5px; padding: 15px;">
+    
+        <p style="color: red;margin: 0 auto">Already Exists</p>
+
+    </div>
+    {% endif %}
+
+    {% if Error == 2 %}
+    <div style="background-color: #5a9a67; margin: 15px; border-radius: 5px; padding: 15px;">
+        <p style="color: red;margin: 0 auto">User Not Exist or Wrong Password</p>
+    </div>
+    {% endif %}
+
+
+
+    <div style="margin: 0 auto; width: 200px;">
+        <h1>MoFlix</h1>
+    </div>
+
+    <div style="background-color: #5a9a67; margin: 15px; border-radius: 5px; padding: 15px;">
+        <b>Sign Up:</b>
+        <form action="/sign-up" method="post">
+            <p><input type=text name=email placeholder="email">
+            <p><input type=password name=password placeholder="password" >
+            <p><input type=submit value="Sign-up">
+        </form>
+        <b>Login:</b>
+        <form action="/login" method="post">
+            <p><input type=text name=email placeholder="email">
+            <p><input type=password name=password placeholder="password">
+            <p><input type=submit value="Login">
+        </form>
+    </div>
+
+</body>
+
+</html>
