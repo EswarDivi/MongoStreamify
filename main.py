@@ -27,8 +27,8 @@ AUTH_PORT = 8000
 
 @app.on_event("startup")
 async def get_mongo():
-    # video_db = AsyncIOMotorClient(f"mongodb://{MONGO_HOST}:{MONGO_PORT}").video
-    video_db=AsyncIOMotorClient("mongodb+srv://admin:admin@cluster0.mqqrdrd.mongodb.net/?retryWrites=true&w=majority").video
+    video_db = AsyncIOMotorClient(f"mongodb://{MONGO_HOST}:{MONGO_PORT}").video
+    # video_db=AsyncIOMotorClient("mongodb+srv://admin:admin@cluster0.mqqrdrd.mongodb.net/?retryWrites=true&w=majority").video
     app.library = video_db.library
     app.fs = AsyncIOMotorGridFSBucket(video_db)
 

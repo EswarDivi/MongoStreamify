@@ -9,8 +9,8 @@ MONGO_PORT = 27017
 
 @app.on_event("startup")
 async def get_users():
-    # users_db = AsyncIOMotorClient(f"mongodb://{MONGO_HOST}:{MONGO_PORT}").users
-    users_db=AsyncIOMotorClient("mongodb+srv://admin:admin@cluster0.mqqrdrd.mongodb.net/?retryWrites=true&w=majority").users
+    users_db = AsyncIOMotorClient(f"mongodb://{MONGO_HOST}:{MONGO_PORT}").users
+    # users_db=AsyncIOMotorClient("mongodb+srv://admin:admin@cluster0.mqqrdrd.mongodb.net/?retryWrites=true&w=majority").users
 
     app.users = users_db
 
