@@ -1,11 +1,3 @@
-# Usage
-
-## Activate Virtual Environment
-
-```bash
-source venv/bin/activate
-```
-
 ## Run Servers
 
 ### Run FastAPI Server for Authentication
