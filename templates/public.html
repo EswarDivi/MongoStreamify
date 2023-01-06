@@ -7,19 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Public Videos</title>
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
     <style>
-
         .videos-grid {
             display: flex;
             flex-wrap: wrap;
-            
         }
-
         .videos-grid-video {
             flex: 50%;
             padding: 20px;
         }
-
         .videos-grid-video video {
             width: 100%;
         }
@@ -32,26 +29,36 @@
 
     <button onclick="window.location.href='/'">User Dashboard</button>
 
-    <!-- <div class="mainv"> -->
-        <!-- <ul> -->
-            {% for video in user_videos %}
-            <h2>{{video}}'s Videos</h2>
-            
-            <div class="videos-grid">
-                {% for file in user_videos[video] %}
-                <div class="videos-grid-video">
-                    
-                    <video width="640" height="320" controls preload="metadata">
-                        <source src="/stream/{{file}}#t=0.2" type="video/mp4">
-                    </video> 
+    <!-- {% for video in user_videos %}
+    <h2>{{video}}'s Videos</h2>
 
-                </div>
-                {% endfor %}
-            </div>
-            {% endfor %}
-        <!-- </ul> -->
-    <!-- </div> -->
+    <div class="videos-grid">
+        {% for file in user_videos[video] %}
+        <div class="videos-grid-video">
+            <video width="640" height="320" controls preload="metadata">
+                <source src="/stream/{{file}}#t=0.2" type="video/mp4" />
+            </video>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %} -->
+    <div class="videos-grid">
+        {% for file in user_videos %}
+        <div class="videos-grid-video">
+            <video id="my-video" class="video-js" controls preload="auto" width="640" height="264"
+                data-setup="{}">
+                <source src="/stream/{{file}}" type="video/mp4" />
+                <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider upgrading
+                    to a web browser that
+                    <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                </p>
+            </video>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
 </body>
 
 </html>
-

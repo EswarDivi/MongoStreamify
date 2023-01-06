@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choices From User</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">    
+    <style>
+        /* center the div */
+        .center {
+            margin: auto;
+            width: 50%;
+            padding: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>What kind of videos do you like?</h1>
+    <l1>Check all that apply</l1>
+    <br>
+    
+    <h4>Welcome {{email}}</h4>
+
+<div>
+    <form action="/choices" method="POST">
+
+        <input type="hidden" name="email" value="{{email}}">
+        <input type="checkbox" id="action" name="action" value="action">
+        <label for="action">Action</label><br>
+        <input type="checkbox" id="productivity" name="productivity" value="productivity">
+        <label for="productivity">Productivity</label><br>
+        <input type="checkbox" id="trailers" name="trailers" value="trailers">
+        <label for="trailers">Trailers</label><br>
+        <input type="checkbox" id="comedy" name="comedy" value="comedy">
+        <label for="comedy">Comedy</label><br>
+
+        <input type="submit" value="Submit">
+        
+    </form>
+
+    
+</div>
+</body>
+
+</body>
+</html>

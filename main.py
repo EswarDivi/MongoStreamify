@@ -31,6 +31,9 @@ async def get_mongo():
     # video_db=AsyncIOMotorClient("mongodb+srv://admin:admin@cluster0.mqqrdrd.mongodb.net/?retryWrites=true&w=majority").video
     app.library = video_db.library
     app.fs = AsyncIOMotorGridFSBucket(video_db)
+    users_db = AsyncIOMotorClient(f"mongodb://{MONGO_HOST}:{MONGO_PORT}").users
+    app.choices=users_db.choices
+
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -50,7 +53,6 @@ async def index(request: Request):
     except Exception:
         return templates.TemplateResponse("auth.html", {"request": request})
 
-
 @app.post("/sign-up")
 async def sign_up(request: Request, email: str = Form(), password: str = Form()):
     user_data = {"email": email, "password": password}
@@ -60,13 +62,29 @@ async def sign_up(request: Request, email: str = Form(), password: str = Form())
                 f"http://{AUTH_HOST}:{AUTH_PORT}/sign-up", data=user_data
             ) as response:
                 r = await response.text()
+        
     except Exception as e:
-        return templates.TemplateResponse("auth.html", {"request": request})
+        return templates.TemplateResponse("error.html", {"request": request,"error": "Something went wrong"})
+
 
     if "1" in r:
         return templates.TemplateResponse("auth.html", {"request": request, "Error": 1})
-    return templates.TemplateResponse("auth.html", {"request": request})
+    return templates.TemplateResponse("choices.html", {"request": request,"email": email})
 
+
+@app.post("/choices")
+async def choices(request: Request,email: str = Form(),action: str=Form(False), productivity: str = Form(False), trailers: str = Form(False), comedy: str = Form(False)):
+    choices_data = {"email":email,"action": action, "productivity": productivity, "trailers": trailers, "comedy": comedy}
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                f"http://{AUTH_HOST}:{AUTH_PORT}/choices", data=choices_data
+            ) as response:
+                r = await response.text()
+    except Exception as e:
+        return templates.TemplateResponse("error.html", {"request": request,"error": "Something went wrong"})
+    
+    return templates.TemplateResponse("auth.html", {"request": request})
 
 @app.post("/login")
 async def login(request: Request, email: str = Form(), password: str = Form()):
@@ -117,8 +135,8 @@ async def _generate_hash():
     return binascii.hexlify(os.urandom(16)).decode("utf-8")
 
 
-async def _add_library_record(email: str, hash: str):
-    data = {"email": email, "filename": hash}
+async def _add_library_record(email: str,user_c ,hash: str):
+    data = {"email": email, "filename": hash,"category":user_c}
     await app.library.insert_one(data)
 
 
@@ -130,13 +148,22 @@ async def _upload(file: object, hash: str):
 
 
 @app.post("/upload")
-async def upload(request: Request, file: UploadFile, background_tasks: BackgroundTasks):
+async def upload(request: Request,background_tasks: BackgroundTasks,file: UploadFile,action: str=Form(False), productivity: str = Form(False), trailers: str = Form(False), comedy: str = Form(False)):
     if request.session["email"]:
+        video_c=[]
+        if action:
+            video_c.append(action)
+        if productivity:
+            video_c.append(productivity)
+        if trailers:
+            video_c.append(trailers)
+        if comedy:
+            video_c.append(comedy)
         if file.filename:
             hash = await _generate_hash()
             background_tasks.add_task(_upload, file, hash)
             background_tasks.add_task(
-                _add_library_record, request.session["email"], hash
+                _add_library_record, request.session["email"],video_c, hash
             )
             videos = await _get_videos(request)
             return templates.TemplateResponse(
@@ -212,5 +239,44 @@ async def publicVideo(request: Request):
             html_page += f'<li><a href="/stream/{j}">{j}</a></li>'
 
     return templates.TemplateResponse(
-        "public.html", {"request": request, "user_videos": user_videos}
+        "video.html", {"request": request, "user_videos": user_videos}
+    )
+
+@app.get("/recommendation")
+async def recommendation(request: Request):
+    if not request.session["email"]:
+        return templates.TemplateResponse("auth.html", {"request": request})
+
+    #User Preference
+    user_choices=app.choices.aggregate([{"$match":{"email":request.session["email"]}},{"$project":{"_id":0,"choices":1}}])
+    user_pref=[]
+    async for i in user_choices:
+        user_pref.extend(i["choices"])
+    user_pref=list(set(user_pref))
+
+    user_pref_videos=[]
+
+    # Video Categorized
+    videos_cat = app.library.aggregate([{"$unwind":"$category"},{"$project":{"_id":0,"category":1,"filename":1}},{"$group":{ "_id": "$category", "videos": { "$push": "$filename" }}}])
+    async for i in videos_cat:
+        if i["_id"] in user_pref:
+            user_pref_videos.extend(i["videos"])
+        
+    user_pref_videos=list(set(user_pref_videos))
+
+    # get all names from library
+    videos = app.library.find({}, {"filename": 1, "_id": 0})
+    all_videos = []
+    async for doc in videos:
+        all_videos.append(doc["filename"])
+
+    # check if user has watched the video
+    
+    not_pref = list(set(all_videos) - set(user_pref_videos))
+
+    user_pref_videos.extend(not_pref)
+
+
+    return templates.TemplateResponse(
+        "public.html", {"request": request, "user_videos": user_pref_videos}
     )

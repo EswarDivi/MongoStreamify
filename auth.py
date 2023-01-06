@@ -13,6 +13,7 @@ async def get_users():
     # users_db=AsyncIOMotorClient("mongodb+srv://admin:admin@cluster0.mqqrdrd.mongodb.net/?retryWrites=true&w=majority").users
 
     app.users = users_db
+    app.choices=users_db.choices
 
 
 @app.post("/sign-up")
@@ -24,6 +25,25 @@ async def sign_up(email: str = Form(), password: str = Form()):
         return 1
     await app.users.users.insert_one(data)
     return 0
+
+
+@app.post("/choices")
+async def choices(email:str=Form(),action: str = Form(False), productivity: str = Form(False), trailers: str = Form(False), comedy: str = Form(False)):
+    user_c=[]
+    if action!="False":
+        user_c.append(action)
+    if productivity!="False":
+        user_c.append(productivity)
+    if trailers!="False":
+        user_c.append(trailers)
+    if comedy!="False":
+        user_c.append(comedy)
+    choices_data = {"email":email,"choices": user_c}
+    try:
+        await app.choices.insert_one(choices_data)
+        return 0
+    except Exception as e:
+        return 1
 
 
 @app.post("/login")

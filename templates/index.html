@@ -12,12 +12,23 @@
         <div style="margin: 0 auto; width: 500px;">
             <h1>Welcome to MoTube</h1>
         </div>  
-        <button onclick="window.location.href = '/publicVideo';">Public Videos</button>
+        <button onclick="window.location.href = '/recommendation';">Public Videos</button>
         <h3>Logged in as {{username}}</h3>
 
         <form action="/upload" method="post" enctype="multipart/form-data">
             <input type="file" name="file" />
+            <br>
+            <input type="checkbox" id="action" name="action" value="action">
+            <label for="action">Action</label><br>
+            <input type="checkbox" id="productivity" name="productivity" value="productivity">
+            <label for="productivity">Productivity</label><br>
+            <input type="checkbox" id="trailers" name="trailers" value="trailers">
+            <label for="trailers">Trailers</label><br>
+            <input type="checkbox" id="comedy" name="comedy" value="comedy">
+            <label for="comedy">Comedy</label><br>
             <input type="submit" value="Upload" />
+
+
         </form>
 
         <!-- Error 3 -->

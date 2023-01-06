@@ -4,61 +4,68 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MoTube</title>
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">    
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
     <style>
         form {
             margin: 0 auto;
             width: 200px;
         }
 
-        input[type=submit] {
+        input[type="submit"] {
             width: 100%;
         }
-       
     </style>
 </head>
 
 <body>
-
     {% if Error == 1 %}
-    <div style="background-color: #5a9a67; margin: 15px; border-radius: 5px; padding: 15px;">
-    
-        <p style="color: red;margin: 0 auto">Already Exists</p>
-
+    <div style="
+        background-color: #5a9a67;
+        margin: 15px;
+        border-radius: 5px;
+        padding: 15px;
+      ">
+        <p style="color: red; margin: 0 auto">Already Exists</p>
+    </div>
+    {% endif %} {% if Error == 2 %}
+    <div style="
+        background-color: #5a9a67;
+        margin: 15px;
+        border-radius: 5px;
+        padding: 15px;
+      ">
+        <p style="color: red; margin: 0 auto">User Not Exist or Wrong Password</p>
     </div>
     {% endif %}
 
-    {% if Error == 2 %}
-    <div style="background-color: #5a9a67; margin: 15px; border-radius: 5px; padding: 15px;">
-        <p style="color: red;margin: 0 auto">User Not Exist or Wrong Password</p>
-    </div>
-    {% endif %}
-
-
-
-    <div style="margin: 0 auto; width: 200px;">
+    <div style="margin: 0 auto; width: 200px">
         <h1>MoTube</h1>
     </div>
 
-    <div style="background-color: #5a9a67; margin: 15px; border-radius: 5px; padding: 15px;">
+    <div style="
+        background-color: #5a9a67;
+        margin: 15px;
+        border-radius: 5px;
+        padding: 15px;
+      ">
         <b>Sign Up:</b>
         <form action="/sign-up" method="post">
-            <p><input type=text name=email placeholder="email">
-            <p><input type=password name=password placeholder="password" >
-            <p><input type=submit value="Sign-up">
+            <p><input type="text" name="email" placeholder="email" /></p>
+            <p><input type="password" name="password" placeholder="password" /></p>
+            <p><input type="submit" value="Sign-up" /></p>
         </form>
+
         <b>Login:</b>
         <form action="/login" method="post">
-            <p><input type=text name=email placeholder="email">
-            <p><input type=password name=password placeholder="password">
-            <p><input type=submit value="Login">
+            <p><input type="text" name="email" placeholder="email" /></p>
+            <p><input type="password" name="password" placeholder="password" /></p>
+            <p><input type="submit" value="Login" /></p>
         </form>
     </div>
-
 </body>
 
 </html>
