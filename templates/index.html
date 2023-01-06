@@ -7,12 +7,37 @@
         <title>MoTube</title>
         <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">    
         <title>MongoDB  video streaming</title>
+        
+        <style>
+            .button_class {
+                display: flex;
+                justify-content: space-between;
+                margin: 0 auto;
+                width: 500px;
+            }
+            button {
+                width: 200px;
+                height: 50px;
+                border-radius: 5px;
+                color: white;
+                font-size: 20px;
+            }
+        </style>
+
     </head>
     <body>
         <div style="margin: 0 auto; width: 500px;">
             <h1>Welcome to MoTube</h1>
         </div>  
-        <button onclick="window.location.href = '/recommendation';">Public Videos</button>
+
+        <div class="button_class">
+
+            <button onclick="window.location.href = '/recommendation';">Home Videos</button>
+            <button onclick="window.location.href = '/publicVideo';">Channels</button>
+
+        </div>
+
+        
         <h3>Logged in as {{username}}</h3>
 
         <form action="/upload" method="post" enctype="multipart/form-data">
