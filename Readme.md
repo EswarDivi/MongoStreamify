@@ -62,7 +62,8 @@ Contributions to MongoStreamify are welcome and encouraged! To contribute, follo
 
 ## License
 
-MongoStreamify is released under the [MIT License](https://opensource.org/licenses/MIT). See the LICENSE file for more details.
+MongoStreamify is released under the [MIT License](https://opensource.org/licenses/MIT). 
+See the LICENSE file for more details.
 
 ## Contact
 
