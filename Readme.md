@@ -1,6 +1,6 @@
 # MongoStreamify
 
-MongoStreamify is a video streaming platform that uses MongoDB as its database and is built using the FastAPI framework and Jinja2 templates. The platform allows users to upload, stream, and watch videos seamlessly, with fast loading times and smooth playback. The use of Docker for deployment ensures easy and efficient scaling of the platform.
+MongoStreamify is a video streaming platform that uses MongoDB as its database and is built using the FastAPI framework and Jinja2 templates. The platform allows users to upload, stream, and watch videos seamlessly, with fast loading times and smooth playback. The use of Docker for deployment ensures effortless and efficient scaling of the platform.
 
 
 
